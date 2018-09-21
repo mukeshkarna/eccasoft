@@ -19,20 +19,22 @@ class Login extends MY_Controller
 		}
 
 		$this->load->library('form_validation');
+		
 		if(isset($_POST['login_form']))
 		{
 			$this->form_validation->set_rules('email', 'Email', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required');
-			if($this->form_validation->run()==TRUE)
+			
+			if($this->form_validation->run()==FALSE)
 			{
-				echo "hello there";
-			}else{
 				
+			}else{
 				$email = $this->input->post('staff_email');
 				$password = $this->input->post('staff_password');
-				echo $email.' '.$password; 
+
 				$user_id = $this->Login_model->checkUser($email, $password);
 				$user_role = $this->Login_model->checkUserRole($email);
+
 				if($user_id)
 				{
 					$data = array(

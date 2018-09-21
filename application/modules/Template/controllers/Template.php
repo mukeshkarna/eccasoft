@@ -8,9 +8,9 @@ class Template extends MY_Controller {
 		parent::__construct();
 		// $this->load->model('Counselor_model');
 
-		// if(!$this->session->userdata('is_logged')){
-		// 	redirect('Login');
-		// }
+		if(!$this->session->userdata('is_logged')){
+			redirect('Login');
+		}
 	}
 	
 	public function index($data=null)
