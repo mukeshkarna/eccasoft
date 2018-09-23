@@ -11,8 +11,9 @@ class Login_model extends CI_Model
         $this->db->where('staff_password', $password);
         $result =  $this->db->get();
 
+
         if($result->num_rows()){
-            return $result->row()->id;
+            return $result->row()->staff_id;
         }else{
             return false;
         }
@@ -25,7 +26,7 @@ class Login_model extends CI_Model
         $result =  $this->db->get();
         
         if($result->num_rows()){
-            return $result->row();
+            return $result->row()->role_id;
         }else{
             return false;
         }

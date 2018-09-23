@@ -7,15 +7,13 @@ class Login extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('Login_model');
-		$this->load->library('session');
-
 	}
 	
 	public function index()
 	{
 		if($this->session->userdata('is_logged'))
 		{
-			redirect('Home');
+			redirect('Home/index');
 		}
 
 		$this->load->library('form_validation');
@@ -25,13 +23,16 @@ class Login extends MY_Controller
 			$this->form_validation->set_rules('email', 'Email', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required');
 			
+			
 			if($this->form_validation->run()==FALSE)
 			{
 				
-			}else{
-				$email = $this->input->post('staff_email');
-				$password = $this->input->post('staff_password');
+			}
+			else{
 
+				$email = $this->input->post('email');
+				$password = $this->input->post('password');
+				
 				$user_id = $this->Login_model->checkUser($email, $password);
 				$user_role = $this->Login_model->checkUserRole($email);
 
@@ -43,7 +44,7 @@ class Login extends MY_Controller
 						'role_id' => $user_role
 					);
 					$this->session->set_userdata($data);
-					redirect('Home');
+					redirect('Home/index');
 				} else {
 					redirect('Login/index');
 				}

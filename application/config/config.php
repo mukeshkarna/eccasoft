@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+// session_start();
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -324,7 +324,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'dNHpWsxR5TiZcDe8MyZovaoVLjPSAOKO';
 
 /*
 |--------------------------------------------------------------------------
