@@ -6,11 +6,11 @@ class Counselor extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		// $this->load->model('Counselor_model');
+		$this->load->model('Counselor_model');
 
-		// if(!$this->session->userdata('is_logged')){
-		// 	redirect('Login');
-		// }
+		if(!$this->session->userdata('is_logged')){
+			redirect('Login');
+		}
 	}
 
 	public function index()
@@ -33,6 +33,10 @@ class Counselor extends MY_Controller {
 		$data['module'] = 'Counselor';
 		$data['content_view'] = 'add_new_counselor';
 		$data['status'] = 'active';
+		if (isset($_POST['add_new_counselor'])) {
+			$this->Counselor_model->add_counselor();
+			redirect('Counselor/index');
+		}
 		echo modules::run('Template/index',$data);
 	}
 }
