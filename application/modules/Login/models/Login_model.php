@@ -11,7 +11,6 @@ class Login_model extends CI_Model
         $this->db->where('staff_password', $password);
         $result =  $this->db->get();
 
-
         if($result->num_rows()){
             return $result->row()->staff_id;
         }else{

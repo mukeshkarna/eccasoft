@@ -6,7 +6,7 @@ class Template extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		// $this->load->model('Counselor_model');
+		$this->load->model('Template_model');
 
 		if(!$this->session->userdata('is_logged')){
 			redirect('Login');
@@ -15,6 +15,9 @@ class Template extends MY_Controller {
 	
 	public function index($data=null)
 	{
+		$id = $this->session->userdata('user_id');
+		$data['userDtl'] = $this->Template_model->getUserDetailById($id);
+		
 		$this->load->view('main_page',$data);
 	}
 }
