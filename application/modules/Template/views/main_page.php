@@ -107,7 +107,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="<?php echo base_url(); ?>assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Mukesh Karna</span>
+              <span class="hidden-xs"><?php echo $userDtl['staff_fname'].' '.$userDtl['staff_mname'].' '.$userDtl['staff_lname']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -115,8 +115,8 @@ desired effect
                 <img src="<?php echo base_url(); ?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Mukesh Karna - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?php echo $userDtl['staff_fname'].' '.$userDtl['staff_mname'].' '.$userDtl['staff_lname']; ?> - <?php echo $userDtl['staff_designation'];?>
+                  <small><?php echo $userDtl['role_name'];?></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -162,7 +162,7 @@ desired effect
           <img src="<?php echo base_url(); ?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Mukesh Karna</p>
+          <p><?php echo $userDtl['staff_fname'].' '.$userDtl['staff_mname'].' '.$userDtl['staff_lname']; ?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
