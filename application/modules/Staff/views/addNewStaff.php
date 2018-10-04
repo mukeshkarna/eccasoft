@@ -6,7 +6,7 @@
   <div class="box-body">
     <div class="row">
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url();?>/Counselor/addNewStaff" method="posts">
+      <form class="form-horizontal" action="<?php echo base_url();?>Staff/addNewStaff" method="post">
         <div class="box-body">
           <div class="form-group">
             <label for="fname" class="col-sm-2 control-label">First Name</label>
@@ -47,23 +47,21 @@
             <label for="phone" class="col-sm-2 control-label">Phone No.</label>
 
             <div class="col-sm-10">
-              <input type="text" name="phoneno" class="form-control" id="phoneno" placeholder="Email">
+              <input type="text" name="phoneno" class="form-control" id="phoneno" placeholder="Phone No." data-inputmask='"mask": "(999) 999-9999"' data-mask>
             </div>
           </div>
           <div class="form-group">
             <label for="Designation" class="col-sm-2 control-label">Designation</label>
 
             <div class="col-sm-10">
-              <input type="text" name="designation" class="form-control" id="designation" placeholder="Email">
+              <input type="text" name="designation" class="form-control" id="designation" placeholder="Designation">
             </div>
           </div>
           <div class="form-group">
             <label for="joineddate" class="col-sm-2 control-label">Joined Date</label>
 
             <div class="col-sm-10">
-             <div class="date">
-               <input type="date" name="joineddate" class="form-control pull-right" id="datepicker" placeholder="Joined Date">
-             </div>
+               <input type="text" name="joineddate" class="form-control pull-right" id="joineddate" placeholder="Joined Date">
            </div>
          </div>
          <div class="form-group">

@@ -75,7 +75,7 @@
         <div class="form-group">
           <label for="phone" class="col-sm-2 control-label">Phone No.</label>
           <div class="col-sm-10">
-              <input type="text" name="phone" id="phone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask placeholder="Phone No.">
+             <input type="text" name="phone" id="phone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask placeholder="Phone No.">
           </div>
         </div>
         <div class="form-group">

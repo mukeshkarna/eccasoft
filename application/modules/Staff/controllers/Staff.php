@@ -7,6 +7,10 @@ class Staff extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Staff_model');
+
+		if(!$this->session->userdata('is_logged')){
+			redirect('Login');
+		}
 	}
 	
 	public function index()
@@ -35,9 +39,10 @@ class Staff extends MY_Controller {
 		$this->load->library('form_validation');
 		
 		if (isset($_POST['add_new_staff'])) {
+			
 			$this->form_validation->set_rules('fname','First Name','required|min_length[3]|max_length[15]');
 			$this->form_validation->set_rules('lname','Last Name','required|min_length[3]|max_length[15]');
-			$this->form_validation->set_rules('pass','Password','required|min_length[3]|max_length[15]');
+			$this->form_validation->set_rules('pass','Password','required|min_length[8]|max_length[15]');
 			$this->form_validation->set_rules('email','Email','required');
 			$this->form_validation->set_rules('phoneno', 'Phone No.' ,'required');
 			$this->form_validation->set_rules('joineddate', 'Joined Date' ,'required');
@@ -50,27 +55,27 @@ class Staff extends MY_Controller {
 			{
 				echo "something wrong happened";
 			}else{
-				$InsertCounselor=array(
-					'c_fname' => $_POST['fname'],
-					'c_mname' => $_POST['mname'],
-					'c_lname' => $_POST['lname'], 
-					'c_dob' => $_POST['dob'],
-					'c_p_address' => $_POST['paddress'],
-					'c_t_address' => $_POST['taddress'],
-					'c_email' => $_POST['email'],
-					'c_phone' => $_POST['phoneno'],
-					'c_qualification' => $_POST['designation'],
-					'c_password' => $_POST['pass'],
-					'c_role' => $this->session->userdata('role_id'),
+				$InsertStaff=array(
+					'staff_fname' => $_POST['fname'],
+					'staff_mname' => $_POST['mname'],
+					'staff_lname' => $_POST['lname'], 
+					'staff_password' => $_POST['pass'],
+					'staff_email' => $_POST['email'],
+					'staff_phone' => $_POST['phoneno'],
+					'staff_designation' => $_POST['designation'],
+					'staff_joined_date' => $_POST['joineddate'],
+					'staff_p_address' => $_POST['paddress'],
+					'staff_t_address' => $_POST['taddress'],
+					'role_id' => $_POST['role'],
 					'c_created_at' => date('Y-m-s h:i:s'),
 					'c_created_by' => $this->session->userdata('user_id')
 				);
-				// echo '<pre>';
-				// print_r($InsertCounselor);
-				// echo '</pre>';
-				// die();
-				$this->Counselor_model->add_counselor($InsertCounselor);
-				redirect('Counselor/index');
+				echo '<pre>';
+				print_r($InsertStaff);
+				echo '</pre>';
+				die();
+				$this->Staff_model->addNewStaff($InsertStaff);
+				redirect('Staff/index');
 			}
 		}
 		echo modules::run('Template/index',$data);

@@ -10,6 +10,11 @@ class Staff_model extends CI_Model
 		parent::__construct();
 	}
 
+	function addNewStaff($InsertStaff)
+	{
+		$str = $this->db->insert('tbl_staff', $InsertStaff);
+	}
+
 	function getAllStaffs()
 	{
 		$this->db->select('staff_id,staff_fname,staff_mname, staff_lname, staff_email, staff_designation');
