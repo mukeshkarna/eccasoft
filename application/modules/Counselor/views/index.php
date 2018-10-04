@@ -30,50 +30,19 @@
                   <th>CTC Code</th>
                   <th>Action</th>
                 </tr>
+                <?php  $sn=1; foreach ($counselorList as $key => $value) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
+                  <td><?php echo $sn;?></td>
+                  <td><?php echo $value['c_fname'].' '.$value['c_mname'].' '.$value['c_lname'];?></td>
+                  <td><?php echo $value['c_ctc_year'];?></td>
+                  <td><?php echo $value['c_code'];?></td>
                   <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
+                    <a href="javascript:void(0)" onclick="counselorDetail('<?=$value['c_id']; ?>')">View</a> | 
+                    <a href="javascript:void(0)" onclick="counselorEdit('<?=$value['c_id']; ?>')">Edit</a> |
+                    <a href="javascript:void(0)" onclick="counselorDelete('<?=$value['c_id']; ?>')">Delete</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
-                  <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
-                  <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
-                  <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
-                  </td>
-                </tr>
+              <?php $sn++; } ?>
               </table>
             </div>
             <!-- /.box-body -->
@@ -82,11 +51,30 @@
         </div>
       </div>
 
-<script>
-$(document).ready( function () {
+
+<script type="text/javascript">
+  $(document).ready(function(){
     $('#counselor').DataTable();
-} );
-function addPage() {
+
+    $('#counselor_detail_modal').on('click','#closeModal', function(){
+      $('#counselor_detail_modal').modal('toggle');
+    });
+  });
+
+  function counselorDetail(counselorId){
+    window.loadPartialView('Counselor/getCounselorDetailById/'+counselorId, true).then(function(responseData){
+      $('#counselor_detail_modal .modal-content').html(responseData);
+      $('#counselor_detail_modal').modal('show');
+    },function(error){
+      $('#counselor_detail_modal .modal-content').html(' ');
+    });
+  }
+
+  function counselorEdit(purchaseId){
+    window.redirect('Counselor/editCounselor/'+purchaseId);
+  }
+
+  function addPage() {
     window.location.assign('<?php echo base_url(); ?>Counselor/addNewCounselor')
 }
 </script>

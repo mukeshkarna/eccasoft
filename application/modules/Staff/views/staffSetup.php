@@ -27,53 +27,23 @@
                   <th>ID</th>
                   <th>Staff Name</th>
                   <th>Designation</th>
-                  <th>Joined Date</th>
+                  <!-- <th>Joined Date</th> -->
+                  <th>Email</th>
                   <th>Action</th>
                 </tr>
+                <?php $sn=1; foreach ($staffList as $key => $value) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
+                  <td><?php echo $sn; ?></td>
+                  <td><?php echo $value['staff_fname'].' '.$value['staff_mname'].' '.$value['staff_lname'];?></td>
+                  <td><?php echo $value['staff_designation'];?></td>
+                  <td><?php echo $value['staff_email'];?></td>
                   <td>
                     <a href="javascript:void(0)" onclick="">View</a> | 
                     <a href="javascript:void(0)" onclick="">Edit</a> |
                     <a href="javascript:void(0)" onclick="">Delete</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
-                  <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
-                  <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Mukesh Karna</td>
-                  <td>2012</td>
-                  <td>3234</td>
-                  <td>
-                    <a href="javascript:void(0)" onclick="">View</a> | 
-                    <a href="javascript:void(0)" onclick="">Edit</a> |
-                    <a href="javascript:void(0)" onclick="">Delete</a>
-                  </td>
-                </tr>
+               <?php $sn++; } ?>
               </table>
             </div>
             <!-- /.box-body -->

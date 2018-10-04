@@ -10,12 +10,12 @@ class Template_model extends CI_Model
 		parent::__construct();
 	}
 
-	// function getUserDetailById($id)
-	// {
-	// 	$this->db->select()->from('tbl_staff');
-	// 	$this->db->where('id'=> $id);
+	function getUserDetailById($id)
+	{
+		$sql = "select a.staff_fname, a.staff_mname, a.staff_lname, a.staff_designation, b.role_name from tbl_staff a left join tbl_role b on b.role_id=a.role_id where staff_id=$id";
+		$result = $this->db->query($sql)->row_array();
 
-	// 	$result
-	// }
+  		return $result;
+	}
 }
 ?>

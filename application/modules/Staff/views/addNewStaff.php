@@ -6,7 +6,7 @@
   <div class="box-body">
     <div class="row">
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url();?>/Counselor/addNewStaff" method="posts">
+      <form class="form-horizontal" action="<?php echo base_url();?>Staff/addNewStaff" method="post">
         <div class="box-body">
           <div class="form-group">
             <label for="fname" class="col-sm-2 control-label">First Name</label>
@@ -47,59 +47,58 @@
             <label for="phone" class="col-sm-2 control-label">Phone No.</label>
 
             <div class="col-sm-10">
-              <input type="text" name="phoneno" class="form-control" id="phoneno" placeholder="Email">
+              <input type="text" name="phoneno" class="form-control" id="phoneno" placeholder="Phone No." data-inputmask='"mask": "(999) 999-9999"' data-mask>
             </div>
           </div>
           <div class="form-group">
             <label for="Designation" class="col-sm-2 control-label">Designation</label>
 
             <div class="col-sm-10">
-              <input type="text" name="designation" class="form-control" id="designation" placeholder="Email">
+              <input type="text" name="designation" class="form-control" id="designation" placeholder="Designation">
             </div>
           </div>
           <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Joined Date</label>
+            <label for="joineddate" class="col-sm-2 control-label">Joined Date</label>
 
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="paddress" class="col-sm-2 control-label">Permanent Address</label>
+               <input type="text" name="joineddate" class="form-control pull-right" id="joineddate" placeholder="Joined Date">
+           </div>
+         </div>
+         <div class="form-group">
+          <label for="paddress" class="col-sm-2 control-label">Permanent Address</label>
 
-            <div class="col-sm-10">
-              <textarea class="form-control" name="paddress" rows="3" placeholder="Enter ..."></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="taddress" class="col-sm-2 control-label">Temporary Address</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" name="taddress" rows="3" placeholder="Enter ..."></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="role" class="col-sm-2 control-label">Role</label>
-
-            <div class="col-sm-10">
-              <select class="form-control" name="role">
-                <option value="">option 1</option>
-                <option value="">option 2</option>
-                <option value="">option 3</option>
-                <option value="">option 4</option>
-                <option value="">option 5</option>
-              </select>
-            </div>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="paddress" rows="3" placeholder="Enter ..."></textarea>
           </div>
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          <button type="submit" name="add_new_staff" class="btn btn-primary">Add</button>
-          <button type="submit" name="cancel" id="cancel" class="btn btn-default pull-right">Cancel</button>
+        <div class="form-group">
+          <label for="taddress" class="col-sm-2 control-label">Temporary Address</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="taddress" rows="3" placeholder="Enter ..."></textarea>
+          </div>
         </div>
-        <!-- /.box-footer -->
-      </form>
-    </div>
-    <!-- /.row -->
+        <div class="form-group">
+          <label for="role" class="col-sm-2 control-label">Role</label>
+
+          <div class="col-sm-10">
+            <select class="form-control" name="role">
+              <option value="">Select Role .....</option>
+              <?php foreach ($roleList as $key => $value) { ?>
+              <option value="<?php echo $value['role_id']?>"><?php echo $value['role_name']?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <input type="submit" name="add_new_staff" class="btn btn-primary" value="Add">
+        <input type="submit" name="cancel" id="cancel" class="btn btn-default pull-right" value="Cancel">
+      </div>
+      <!-- /.box-footer -->
+    </form>
   </div>
-  <!-- /.box-body -->
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->
 </div>
