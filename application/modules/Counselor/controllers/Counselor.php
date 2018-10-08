@@ -86,4 +86,20 @@ class Counselor extends MY_Controller {
 		}
 		echo modules::run('Template/index',$data);
 	}
+
+	function getCounselorDetailById($counselorId)
+	{
+		$data['title']='Counselor Detail';
+		$data['page_header']='Counselor';
+		$data['heading']='Counselor Detail';
+		$data['module']="Counselor";
+		$data['content_view']="counselorDetail";
+		$data['status'] = 'active';
+		$data['counselorDtl']=$this->Counselor_model->getCounselorDtlById($counselorId);
+		// echo '<pre>';
+		// print_r($data['counselorDtl']);
+		// echo '</pre>';
+		// die();
+		echo modules::run('Template/index',$data);
+	}
 }

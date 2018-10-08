@@ -40,7 +40,7 @@
             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="email" placeholder="Email">
+              <input type="email" name="email" class="form-control" id="email" placeholder="Email">
             </div>
           </div>
           <div class="form-group">
@@ -61,7 +61,9 @@
             <label for="joineddate" class="col-sm-2 control-label">Joined Date</label>
 
             <div class="col-sm-10">
-               <input type="text" name="joineddate" class="form-control pull-right" id="joineddate" placeholder="Joined Date">
+              <div class="date">
+                <input type="text" name="joineddate" class="form-control pull-right" id="datepicker" placeholder="Joined Date">
+              </div>
            </div>
          </div>
          <div class="form-group">

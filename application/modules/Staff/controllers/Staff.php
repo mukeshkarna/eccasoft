@@ -40,9 +40,9 @@ class Staff extends MY_Controller {
 		
 		if (isset($_POST['add_new_staff'])) {
 			
-			$this->form_validation->set_rules('fname','First Name','required|min_length[3]|max_length[15]');
-			$this->form_validation->set_rules('lname','Last Name','required|min_length[3]|max_length[15]');
-			$this->form_validation->set_rules('pass','Password','required|min_length[8]|max_length[15]');
+			$this->form_validation->set_rules('fname','First Name','required');
+			$this->form_validation->set_rules('lname','Last Name','required');
+			$this->form_validation->set_rules('pass','Password','required');
 			$this->form_validation->set_rules('email','Email','required');
 			$this->form_validation->set_rules('phoneno', 'Phone No.' ,'required');
 			$this->form_validation->set_rules('joineddate', 'Joined Date' ,'required');
@@ -50,7 +50,7 @@ class Staff extends MY_Controller {
 			$this->form_validation->set_rules('taddress', 'Temporary Address' ,'required');
 			$this->form_validation->set_rules('role', 'Role' ,'required');
 			$this->form_validation->set_rules('designation', 'Designation', 'required');
-
+			
 			if($this->form_validation->run()==FALSE)
 			{
 				echo "something wrong happened";
@@ -67,17 +67,31 @@ class Staff extends MY_Controller {
 					'staff_p_address' => $_POST['paddress'],
 					'staff_t_address' => $_POST['taddress'],
 					'role_id' => $_POST['role'],
-					'c_created_at' => date('Y-m-s h:i:s'),
-					'c_created_by' => $this->session->userdata('user_id')
+					'staff_created_at' => date('Y-m-s h:i:s'),
+					'staff_created_by' => $this->session->userdata('user_id')
 				);
-				echo '<pre>';
-				print_r($InsertStaff);
-				echo '</pre>';
-				die();
+				// echo '<pre>';
+				// print_r($InsertStaff);
+				// echo '</pre>';
+				// die();
 				$this->Staff_model->addNewStaff($InsertStaff);
 				redirect('Staff/index');
 			}
 		}
+		echo modules::run('Template/index',$data);
+	}
+
+
+	public function getStaffDtl()
+	{
+		$data['title']='Staff';
+		$data['page_header']='Staff';
+		$data['heading']='Staff List';
+		$data['module']="Staff";
+		$data['content_view']="staffSetup";
+		$data['status'] = 'active';
+		$data['staffList'] = $this->Staff_model->getStaffDtlById();
+
 		echo modules::run('Template/index',$data);
 	}
 }
