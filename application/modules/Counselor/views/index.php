@@ -62,6 +62,19 @@
     $(document).ready(function(){
       $('#counselor').DataTable();
 
+      $('.view_data').click(function(){  
+           var counselor_id = $(this).attr("c_id");  
+           $.ajax({  
+                url:"counselorDetail.php",  
+                method:"post",  
+                data:{counselor_id:counselor_id},  
+                success:function(data){  
+                     $('#counselor_detail_modal').html(data);  
+                     $('#dataModal').modal("show");  
+                }  
+           });  
+      }); 
+
       $('#counselor_detail_modal').on('click','#closeModal', function(){
         $('#counselor_detail_modal').modal('toggle');
       });
