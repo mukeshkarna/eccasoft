@@ -1,5 +1,5 @@
 
-	<div class="modal-body" id="purchase_detail_table">
+	<div class="modal-body" id="counselor_detail_table">
 		<table class="table table-striped">
 			<tr>
 				<td>Counselor ID :</td>

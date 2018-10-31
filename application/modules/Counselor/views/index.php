@@ -37,7 +37,8 @@
               <td><?php echo $value['c_ctc_year'];?></td>
               <td><?php echo $value['c_code'];?></td>
               <td>
-                <a href="javascript:void(0)" onclick="counselorDetail('<?=$value['c_id']; ?>')" class="btn btn-default">View</a> 
+                <input type="button" name="view" value="View" id="<?php echo $value["c_id"]; ?>" class="btn btn-default view_data" />
+                <!-- <a href="javascript:void(0)" onclick="counselorDetail('<?//=$value['c_id']; ?>')" class="btn btn-default view_data">View</a>  -->
                 <a href="javascript:void(0)" onclick="counselorEdit('<?=$value['c_id']; ?>')" class="btn btn-primary">Edit</a>
                 <a href="javascript:void(0)" onclick="counselorDelete('<?=$value['c_id']; ?>')" class="btn btn-danger">Delete</a>
               </td>
@@ -60,14 +61,15 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#counselor').DataTable();
+      // $('#counselor').DataTable();
 
       $('.view_data').click(function(){  
-           var counselor_id = $(this).attr("c_id");  
+          var action ="getCounselorDetailById";
+           // var counselor_id = $(this).attr("c_id");  
            $.ajax({  
-                url:"counselorDetail.php",  
+                url:"Counselor/getCounselorDetailById",  
                 method:"post",  
-                data:{counselor_id:counselor_id},  
+                data:{action:action},  
                 success:function(data){  
                      $('#counselor_detail_modal').html(data);  
                      $('#dataModal').modal("show");  
@@ -75,19 +77,31 @@
            });  
       }); 
 
+    //   function viewData(){
+    //   var action ="loadData";
+    //   $.ajax({
+    //     url:"CI_crud/loadData",
+    //     method:"POST",
+    //     data:{action:action},
+    //     success:function(data){
+    //       $("#view_data").html(data);
+    //     }
+    //   });
+    // }
+
       $('#counselor_detail_modal').on('click','#closeModal', function(){
         $('#counselor_detail_modal').modal('toggle');
       });
     });
 
-    function counselorDetail(counselorId){
-      window.location.assign('Counselor/getCounselorDetailById/'+counselorId, true).then(function(responseData){
-        $('#counselor_detail_modal .modal-content').html(responseData);
-        $('#counselor_detail_modal').modal('show');
-      },function(error){
-        $('#counselor_detail_modal .modal-content').html(' ');
-      });
-    }
+    // function counselorDetail(counselorId){
+    //   window.location.assign('Counselor/getCounselorDetailById/'+counselorId, true).then(function(responseData){
+    //     $('#counselor_detail_modal .modal-content').html(responseData);
+    //     $('#counselor_detail_modal').modal('show');
+    //   },function(error){
+    //     $('#counselor_detail_modal .modal-content').html(' ');
+    //   });
+    // }
 
     function counselorEdit(purchaseId){
       window.redirect('Counselor/editCounselor/'+purchaseId);
