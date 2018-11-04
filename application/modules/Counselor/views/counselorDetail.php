@@ -3,7 +3,7 @@
 		<table class="table table-striped">
 			<tr>
 				<td>Counselor ID :</td>
-				<td><?=$counselorDtl['c_id'];?></td>
+				<td><p id="c_fname"></td>
 			</tr>
 			<tr>
 				<td>Full Name :</td>

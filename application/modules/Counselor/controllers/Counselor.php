@@ -41,7 +41,7 @@ class Counselor extends MY_Controller {
 		$this->load->library('form_validation');
 
 		if (isset($_POST['add_new_counselor'])) {
-			
+					
 			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('ctc_code','CTC Code', 'required');
@@ -60,18 +60,18 @@ class Counselor extends MY_Controller {
 			else
 			{
 				$InsertCounselor=array(
-					'c_fname' => $_POST['fname'],
-					'c_mname' => $_POST['mname'],
-					'c_lname' => $_POST['lname'], 
-					'c_code' => $_POST['ctc_code'],
-					'c_dob' => $_POST['dob'],
-					'c_p_address' => $_POST['paddress'],
-					'c_t_address' => $_POST['taddress'],
-					'c_email' => $_POST['email'],
-					'c_phone' => $_POST['phone'],
-					'c_ctc_year' => $_POST['ctc_year'],
-					'c_qualification' => $_POST['qualification'],
-					'c_password' => $_POST['pass'],
+					'c_fname' => $this->input->post('fname'),
+					'c_mname' => $this->input->post('mname'),
+					'c_lname' => $this->input->post('lname'), 
+					'c_code' => $this->input->post('ctc_code'),
+					'c_dob' => $this->input->post('dob'),
+					'c_p_address' => $this->input->post('paddress'),
+					'c_t_address' => $this->input->post('taddress'),
+					'c_email' => $this->input->post('email'),
+					'c_phone' => $this->input->post('phone'),
+					'c_ctc_year' => $this->input->post('ctc_year'),
+					'c_qualification' => $this->input->post('qualification'),
+					'c_password' => $this->input->post('pass'),
 					'c_role' => $this->session->userdata('role_id'),
 					'c_created_at' => date('Y-m-s h:i:s'),
 					'c_created_by' => $this->session->userdata('user_id')
@@ -87,19 +87,71 @@ class Counselor extends MY_Controller {
 		echo modules::run('Template/index',$data);
 	}
 
+	function editCounselor($counselorId)
+	{
+		$data['title'] = 'Edit Counselor Detail';
+		$data['page_header'] = 'Edit Counselor Detail';
+		$data['heading'] = 'Edit Counselor Detail';
+		$data['module'] = 'Counselor';
+		$data['content_view'] = 'edit_counselor_detail';
+		$data['status'] = 'active';
+
+		$data['counselorDtl']=$this->Counselor_model->getCounselorDtlById($counselorId);
+
+		if (isset($_POST['edit_counselor'])) {
+			
+			if($this->input->post('fname') != $data['counselorDtl']['c_fname'])
+			{
+				$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
+			}
+			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
+			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
+			$this->form_validation->set_rules('ctc_code','CTC Code', 'required');
+			$this->form_validation->set_rules('dob','Date of birth', 'required');
+			$this->form_validation->set_rules('paddress','Permanent Address', 'required|min_length[10]|max_length[200]');
+			$this->form_validation->set_rules('taddress','Temporary Address', 'required|min_length[10]|max_length[200]');
+			$this->form_validation->set_rules('email','Email', 'required');
+			$this->form_validation->set_rules('phone','Phone', 'required');
+			$this->form_validation->set_rules('ctc_year','CTC Year', 'required');
+			$this->form_validation->set_rules('qualification','Qualification', 'required');
+			$this->form_validation->set_rules('pass','Password', 'required');
+
+			if ($this->form_validation->run()==FALSE) {
+				echo "something happened";
+			}
+			else
+			{
+				$updateCounselor=array(
+					'c_fname' => $this->input->post('fname'),
+					'c_mname' => $this->input->post('mname'),
+					'c_lname' => $this->input->post('lname'), 
+					'c_code' => $this->input->post('ctc_code'),
+					'c_dob' => $this->input->post('dob'),
+					'c_p_address' => $this->input->post('paddress'),
+					'c_t_address' => $this->input->post('taddress'),
+					'c_email' => $this->input->post('email'),
+					'c_phone' => $this->input->post('phone'),
+					'c_ctc_year' => $this->input->post('ctc_year'),
+					'c_qualification' => $this->input->post('qualification'),
+					'c_password' => $this->input->post('pass'),
+					'c_role' => $this->session->userdata('role_id'),
+					'c_modified_at' => date('Y-m-s h:i:s'),
+					'c_modified_by' => $this->session->userdata('user_id')
+				);
+				// echo '<pre>';
+				// print_r($InsertCounselor);
+				// echo '</pre>';
+				// die();
+				$this->Counselor_model->edit_counselor($counselorId,$updateCounselor);
+				redirect('Counselor/index');
+			}
+		}
+		echo modules::run('Template/index',$data);
+	}
+
 	function getCounselorDetailById($counselorId)
 	{
-		$data['title']='Counselor Detail';
-		$data['page_header']='Counselor';
-		$data['heading']='Counselor Detail';
-		$data['module']="Counselor";
-		$data['content_view']="counselorDetail";
-		$data['status'] = 'active';
-		$data['counselorDtl']=$this->Counselor_model->getCounselorDtlById($counselorId);
-		// echo '<pre>';
-		// print_r($data['counselorDtl']);
-		// echo '</pre>';
-		// die();
-		echo modules::run('Template/index',$data);
+		$data['counselorDtl']=$this->Counselor_model->getCounselorDtlById($counselorId);		
+		echo json_encode($data['counselorDtl']);
 	}
 }
