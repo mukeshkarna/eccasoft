@@ -7,6 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" href="<?php echo base_url(); ?>/assets/images/ECCA-Logo.png">
   <title>ECCA::<?php echo $heading; ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -244,7 +245,7 @@ desired effect
  <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Anything you want
+      Evaluation Software
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; <?php echo date('Y');?> <a href="www.ecca.org.np">Environmental Camps for Conservation Awareness</a>.</strong> All rights reserved.

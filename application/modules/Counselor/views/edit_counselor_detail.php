@@ -6,7 +6,7 @@
   <div class="box-body">
     <div class="row">
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url();?>Counselor/editNewCounselor" method="post">
+      <form class="form-horizontal" action="<?php echo base_url();?>Counselor/editCounselor/<?php echo $counselorDtl['c_id']; ?>" method="post">
         <div class="box-body">
           <div class="form-group">
             <label for="firstname" class="col-sm-2 control-label">First Name</label>
@@ -29,6 +29,18 @@
             <div class="col-sm-10">
               <input type="text" name="lname" class="form-control" value="<?php echo $counselorDtl['c_lname']; ?>" id="lname" placeholder="Last Name">
               <?php echo form_error('lname'); ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="gender" class="col-sm-2 control-label">Gender</label>
+
+            <div class="col-sm-10">
+              <select class="form-control gender" name="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <?php echo form_error('gender'); ?>
             </div>
           </div>
           <div class="form-group">
@@ -75,65 +87,92 @@
         <div class="form-group">
           <label for="phone" class="col-sm-2 control-label">Phone No.</label>
           <div class="col-sm-10">
-             <input type="text" name="phone" id="phone" class="form-control" value="<?php echo $counselorDtl['c_phone']; ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask placeholder="Phone No.">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="ctcyear" class="col-sm-2 control-label">CTC Year</label>
+           <input type="text" name="phone" id="phone" class="form-control" value="<?php echo $counselorDtl['c_phone']; ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask placeholder="Phone No.">
+         </div>
+       </div>
+       <div class="form-group">
+        <label for="ctcyear" class="col-sm-2 control-label">CTC Year</label>
 
-          <div class="col-sm-10">
-            <select class="form-control ctcyear" name="ctc_year">
-              <option value="">Select Year</option>
-              <?php 
-              for ($i=1987; $i <= Date('Y'); $i++) { 
-                echo '<option value="'.$i.'">'.$i.'</option>';
-              }
-              ?>
-            </select>
-            <?php echo form_error('ctc_year'); ?>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="qualification" class="col-sm-2 control-label">Qualification</label>
-
-          <div class="col-sm-10">
-            <select class="form-control qua" name="qualification">
-              <option value="">Select Qualification</option>
-              <option value="master">Master</option>
-              <option value="bachelor">Bachelor</option>
-              <option value="10+2">10+2</option>
-            </select>
-            <?php echo form_error('qualification'); ?>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="pass" class="col-sm-2 control-label">Password</label>
-
-          <div class="col-sm-10">
-            <input type="password" name="pass" class="form-control" id="password" placeholder="Password">
-            <?php echo form_error('pass'); ?>
-          </div>
+        <div class="col-sm-10">
+          <select class="form-control ctcyear" name="ctc_year">
+            <option value="">Select Year</option>
+            <?php 
+            for ($i=1987; $i <= Date('Y'); $i++) { 
+              echo '<option value="'.$i.'">'.$i.'</option>';
+            }
+            ?>
+          </select>
+          <?php echo form_error('ctc_year'); ?>
         </div>
       </div>
-      <!-- /.box-body -->
-      <div class="box-footer">
-        <input type="submit" name="edit_counselor" class="btn btn-primary" value="Edit">
-        <input type="submit" name="cancel" onclick="cancel()" class="btn btn-default pull-right" value="Cancel">
+      <div class="form-group">
+        <label for="ctcmonth" class="col-sm-2 control-label">CTC Month</label>
+
+        <div class="col-sm-10">
+          <select class="form-control month" name="ctc_month">
+            <option value="">Select Month</option>
+              <option value="jan">January</option>;
+              <option value="feb">February</option>;
+              <option value="mar">March</option>;
+              <option value="apr">April</option>;
+              <option value="may">May</option>;
+              <option value="jun">June</option>;
+              <option value="jul">July</option>;
+              <option value="aug">August</option>;
+              <option value="sep">September</option>;
+              <option value="oct">October</option>;
+              <option value="nov">November</option>;
+              <option value="dec">December</option>;
+          </select>
+          <?php echo form_error('ctc_month'); ?>
+        </div>
       </div>
-      <!-- /.box-footer -->
-    </form>
-  </div>
-  <!-- /.row -->
+      <div class="form-group">
+        <label for="qualification" class="col-sm-2 control-label">Qualification</label>
+
+        <div class="col-sm-10">
+          <select class="form-control qua" name="qualification">
+            <option value="">Select Qualification</option>
+            <option value="master">Master</option>
+            <option value="bachelor">Bachelor</option>
+            <option value="10+2">10+2</option>
+          </select>
+          <?php echo form_error('qualification'); ?>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pass" class="col-sm-2 control-label">Password</label>
+
+        <div class="col-sm-10">
+          <input type="password" name="pass" class="form-control" id="password" value="<?php echo $counselorDtl['c_password']; ?>" placeholder="Password">
+        </div>
+      </div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <input type="submit" name="edit_counselor" class="btn btn-primary" value="Edit">
+      <input type="button" name="cancel" class="btn btn-default pull-right cancel" value="Cancel">
+    </div>
+    <!-- /.box-footer -->
+  </form>
+</div>
+<!-- /.row -->
 </div>
 <!-- /.box-body -->
 </div>
 <script>
-$(document).ready( function () {
-      $('.ctcyear').val('<?=$counselorDtl['c_ctc_year'];?>');
-      $('.qua').val('<?=$counselorDtl['c_qualification'];?>');
+  $(document).ready( function () {
+    $('.ctcyear').val('<?=$counselorDtl['c_ctc_year'];?>');
+    $('.qua').val('<?=$counselorDtl['c_qualification'];?>');
+    $('.gender').val('<?=$counselorDtl['c_gender']?>');
+    $('.month').val('<?=$counselorDtl['c_ctc_month']?>');
 
-} );
-function cancel() {
-    window.location.assign('<?php echo base_url(); ?>Template/')
-}
+    $('#datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+    });
+
+  } );
+  $('.cancel').click(function(){
+    window.location.assign('<?php echo base_url(); ?>/Counselor')
+  }); 
 </script>

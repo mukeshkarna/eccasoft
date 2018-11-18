@@ -16,13 +16,7 @@ class Template extends MY_Controller {
 	public function index($data=null)
 	{
 		$id = $this->session->userdata('user_id');
-		$data['userDtl'] = $this->Template_model->getUserDetailById($id);
-
-		// echo "<pre>";
-		// print_r($data['userDtl']);
-		// echo "</pre>";
-		// die();
-		
+		$data['userDtl'] = $this->Template_model->getUserDetailById($id);	
 		$this->load->view('main_page',$data);
 	}
 }

@@ -10,14 +10,16 @@ class Counselor_model extends CI_Model
 		parent::__construct();
 	}
 
-	function add_counselor($InsertCounselor)
+	function insertCounselor($InsertCounselor)
 	{
 		$str=$this->db->insert('tbl_counselor',$InsertCounselor);
+
+		return $str;
 	}
 
 	function getAllCounselors()
 	{
-		$this->db->select('c_id,c_fname,c_mname,c_lname,c_email,c_ctc_year,c_code');
+		$this->db->select('c_id,c_fname,c_mname,c_lname,c_email,c_ctc_year, c_ctc_month,c_code');
 		$this->db->from('tbl_counselor');
 
 		$query=$this->db->get();
@@ -33,7 +35,7 @@ class Counselor_model extends CI_Model
 
 	function getCounselorDtlById($counselorId)
 	{
-		$this->db->select('c_id,c_fname,c_mname,c_lname,c_email,c_ctc_year,c_code,c_dob,c_p_address,c_t_address,c_phone,c_qualification,c_role');
+		$this->db->select('c_id,c_fname,c_mname,c_lname,c_gender,c_email,c_ctc_year,c_ctc_month,c_password,c_code,c_dob,c_p_address,c_t_address,c_phone,c_qualification,c_role');
 		$this->db->from('tbl_counselor');
 		$this->db->where('c_id', $counselorId);
 
@@ -46,6 +48,12 @@ class Counselor_model extends CI_Model
 		{
 			return false;
 		}
+	}
+
+	function updateCounselorById($counselorId,$updateCounselor)
+	{
+		$ret=$this->db->update('tbl_counselor', $updateCounselor, array('c_id' => $counselorId));
+		return $ret;
 	}
 }
 ?>

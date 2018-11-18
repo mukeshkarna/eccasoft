@@ -1,9 +1,21 @@
 <!-- /.box-body -->
 <div class="box-footer clearfix">
   <a href="javascript:void(0)" onclick="addPage()" class="btn btn-sm btn-info btn-flat pull-left">Add New Counselor</a>
-  <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
 </div>
 <!-- /.box-footer -->
+<?php if ($this->session->flashdata('success')) { ?>
+  <div class="box-body">
+    <div class="alert alert-info fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <?php echo $this->session->flashdata('success'); ?>
+    </div>
+  </div>
+<?php } elseif ($this->session->flashdata('error')) { ?>
+  <div class="alert alert-warning fade in">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <?php echo $this->session->flashdata('error'); ?>
+  </div>
+<?php } ?>
 <div class="row">
   <div class="col-xs-12">
     <div class="box">
@@ -40,7 +52,7 @@
                 <input type="button" name="view" value="View" id="<?php echo $value["c_id"]; ?>" class="btn btn-default view_data" />
                 <!-- <a href="javascript:void(0)" onclick="counselorDetail('<?//=$value['c_id']; ?>')" class="btn btn-default">View</a>  -->
                 <a href="javascript:void(0)" onclick="counselorEdit('<?=$value['c_id']; ?>')" class="btn btn-primary">Edit</a>
-                <a href="javascript:void(0)" onclick="counselorDelete('<?=$value['c_id']; ?>')" class="btn btn-danger">Delete</a>
+                <a href="javascript:void(0)" class="btn btn-danger delete_data">Delete</a>
               </td>
             </tr>
             <?php $sn++; } ?>
@@ -52,13 +64,17 @@
                   <table class="table table-striped">
                     <h2>Counselor Detail</h2>
                     <br>
-                    <tr>
+                 <!--    <tr>
                       <td>Counselor ID :</td>
                       <td id="c_id"></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                       <td>Full Name :</td>
                       <td id="c_name"></td>
+                    </tr>
+                    <tr>
+                      <td>Gender :</td>
+                      <td id="c_gender" style="text-transform: capitalize;"></td>
                     </tr>
                     <tr>
                       <td>Email :</td>
@@ -66,7 +82,11 @@
                     </tr>
                     <tr>
                       <td>CTC Year. :</td>
-                      <td id="c_ctc_year"></td>
+                      <td id="c_ctc_year" style="text-transform: capitalize;"></td>
+                    </tr>
+                    <tr>
+                      <td>Date of Birth :</td>
+                      <td id="ctc_dob"></td>
                     </tr>
                     <tr>
                       <td>CTC Code :</td>
@@ -96,6 +116,20 @@
               </div><!-- end modal dialog -->
             </div><!-- end modal -->
           </div>
+
+          <div class="modal fade" role="dialog" id="dataModalDelete" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body" >
+                  Are you Sure?
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-flat yes" onclick="counselorDelete()" id="yes">Yes</button>
+                    <button type="button" class="btn btn-default btn-flat no" id="no">Cancel</button>
+                  </div>
+                </div><!-- end content -->
+              </div><!-- end modal dialog -->
+            </div><!-- end modal -->
+          </div>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -107,6 +141,19 @@
       $(document).ready(function(){
         // $('#counselor').DataTable();
 
+        $('.delete_data').click(function(){
+          var counselor_id = $(this).attr("id");
+          $('#dataModalDelete').modal("show");
+        })
+
+        $('#dataModalDelete').on('click','#yes', function(){
+          $('#dataModalDelete').modal('toggle');
+        });
+
+        $('#dataModalDelete').on('click','#no', function(){
+          $('#dataModalDelete').modal('toggle');
+        });
+
         $('.view_data').click(function(){  
           var counselor_id = $(this).attr("id");  
           // alert(counselor_id);
@@ -115,14 +162,14 @@
             method:"post",  
             data:{},  
             success:function(data){  
-              console.log(data);
-              var x= data;
-              var obj=JSON.parse(x);
+              var obj=JSON.parse(data);
 
-              $('#c_id').html(obj.c_id);
+              // $('#c_id').html(obj.c_id);
               $('#c_name').html(obj.c_fname+" "+obj.c_mname+" "+obj.c_lname);
+              $('#c_gender').html(obj.c_gender);
               $('#c_email').html(obj.c_email);
-              $('#c_ctc_year').html(obj.c_ctc_year);
+              $('#c_ctc_year').html(obj.c_ctc_month+", "+obj.c_ctc_year);
+              $('#ctc_dob').html(obj.c_dob);
               $('#ctc_code').html(obj.c_code);
               $('#paddress').html(obj.c_p_address);
               $('#taddress').html(obj.c_t_address);

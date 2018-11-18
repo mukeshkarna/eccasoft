@@ -22,10 +22,7 @@ class Counselor extends MY_Controller {
 		$data['content_view']="index";
 		$data['status'] = 'active';
 		$data['counselorList']=$this->Counselor_model->getAllCounselors();
-		// echo '<pre>';
-		// print_r($data['counselorList']);
-		// echo '</pre>';
-		// die();
+
 		echo modules::run('Template/index',$data);
 	}
 
@@ -41,9 +38,10 @@ class Counselor extends MY_Controller {
 		$this->load->library('form_validation');
 
 		if (isset($_POST['add_new_counselor'])) {
-					
+
 			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
+			$this->form_validation->set_rules('gender','Gender', 'required');
 			$this->form_validation->set_rules('ctc_code','CTC Code', 'required');
 			$this->form_validation->set_rules('dob','Date of birth', 'required');
 			$this->form_validation->set_rules('paddress','Permanent Address', 'required|min_length[10]|max_length[200]');
@@ -51,18 +49,20 @@ class Counselor extends MY_Controller {
 			$this->form_validation->set_rules('email','Email', 'required');
 			$this->form_validation->set_rules('phone','Phone', 'required');
 			$this->form_validation->set_rules('ctc_year','CTC Year', 'required');
+			$this->form_validation->set_rules('ctc_month','CTC Month', 'required');
 			$this->form_validation->set_rules('qualification','Qualification', 'required');
 			$this->form_validation->set_rules('pass','Password', 'required');
 
 			if ($this->form_validation->run()==FALSE) {
-				echo "something happened";
+				$this->session->set_flashdata('error', "Form Validation Error!!!");
 			}
 			else
 			{
 				$InsertCounselor=array(
 					'c_fname' => $this->input->post('fname'),
 					'c_mname' => $this->input->post('mname'),
-					'c_lname' => $this->input->post('lname'), 
+					'c_lname' => $this->input->post('lname'),
+					'c_gender' => $this->input->post('gender'), 
 					'c_code' => $this->input->post('ctc_code'),
 					'c_dob' => $this->input->post('dob'),
 					'c_p_address' => $this->input->post('paddress'),
@@ -70,17 +70,22 @@ class Counselor extends MY_Controller {
 					'c_email' => $this->input->post('email'),
 					'c_phone' => $this->input->post('phone'),
 					'c_ctc_year' => $this->input->post('ctc_year'),
+					'c_ctc_month' => $this->input->post('ctc_month'),
 					'c_qualification' => $this->input->post('qualification'),
 					'c_password' => $this->input->post('pass'),
-					'c_role' => $this->session->userdata('role_id'),
+					'c_role' => '3',
 					'c_created_at' => date('Y-m-s h:i:s'),
 					'c_created_by' => $this->session->userdata('user_id')
 				);
-				// echo '<pre>';
-				// print_r($InsertCounselor);
-				// echo '</pre>';
-				// die();
-				$this->Counselor_model->add_counselor($InsertCounselor);
+
+				$result = $this->Counselor_model->insertCounselor($InsertCounselor);
+
+				if(!empty($result)){
+					$this->session->set_flashdata('success', "Data Inserted Successfully.");
+				}else{
+					$this->session->set_flashdata('error', "Sorry!! Data couldn't be inserted.");
+				}
+
 				redirect('Counselor/index');
 			}
 		}
@@ -100,12 +105,10 @@ class Counselor extends MY_Controller {
 
 		if (isset($_POST['edit_counselor'])) {
 			
-			if($this->input->post('fname') != $data['counselorDtl']['c_fname'])
-			{
-				$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
-			}
+			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
+			$this->form_validation->set_rules('gender','Gender', 'required');
 			$this->form_validation->set_rules('ctc_code','CTC Code', 'required');
 			$this->form_validation->set_rules('dob','Date of birth', 'required');
 			$this->form_validation->set_rules('paddress','Permanent Address', 'required|min_length[10]|max_length[200]');
@@ -113,18 +116,20 @@ class Counselor extends MY_Controller {
 			$this->form_validation->set_rules('email','Email', 'required');
 			$this->form_validation->set_rules('phone','Phone', 'required');
 			$this->form_validation->set_rules('ctc_year','CTC Year', 'required');
+			$this->form_validation->set_rules('ctc_month','CTC Month', 'required');
 			$this->form_validation->set_rules('qualification','Qualification', 'required');
 			$this->form_validation->set_rules('pass','Password', 'required');
 
 			if ($this->form_validation->run()==FALSE) {
-				echo "something happened";
+				$this->session->set_flashdata('error', "Form Validation Error!!!");
 			}
 			else
 			{
 				$updateCounselor=array(
 					'c_fname' => $this->input->post('fname'),
 					'c_mname' => $this->input->post('mname'),
-					'c_lname' => $this->input->post('lname'), 
+					'c_lname' => $this->input->post('lname'),
+					'c_gender' => $this->input->post('gender'),
 					'c_code' => $this->input->post('ctc_code'),
 					'c_dob' => $this->input->post('dob'),
 					'c_p_address' => $this->input->post('paddress'),
@@ -132,17 +137,21 @@ class Counselor extends MY_Controller {
 					'c_email' => $this->input->post('email'),
 					'c_phone' => $this->input->post('phone'),
 					'c_ctc_year' => $this->input->post('ctc_year'),
+					'c_ctc_month' => $this->input->post('ctc_month'),
 					'c_qualification' => $this->input->post('qualification'),
 					'c_password' => $this->input->post('pass'),
-					'c_role' => $this->session->userdata('role_id'),
+					'c_role' => '3',
 					'c_modified_at' => date('Y-m-s h:i:s'),
 					'c_modified_by' => $this->session->userdata('user_id')
 				);
-				// echo '<pre>';
-				// print_r($InsertCounselor);
-				// echo '</pre>';
-				// die();
-				$this->Counselor_model->edit_counselor($counselorId,$updateCounselor);
+
+				$result = $this->Counselor_model->updateCounselorById($counselorId,$updateCounselor);
+
+				if(!empty($result)){
+					$this->session->set_flashdata('success', "Data Updated Successfully.");
+				}else{
+					$this->session->set_flashdata('error', "Sorry!! Data couldn't be updated.");
+				}
 				redirect('Counselor/index');
 			}
 		}
