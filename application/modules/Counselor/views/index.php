@@ -13,9 +13,10 @@
 <?php } elseif ($this->session->flashdata('error')) { ?>
   <div class="alert alert-warning fade in">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <?php echo $this->session->flashdata('error'); ?>
+    <?php echo $this->session->flashdata('error'); ?>
   </div>
 <?php } ?>
+
 <div class="row">
   <div class="col-xs-12">
     <div class="box">
@@ -43,16 +44,15 @@
             <th>Action</th>
           </tr>
           <?php  $sn=1; foreach ($counselorList as $key => $value) { ?>
-            <tr>
+            <tr id="<?php echo $value['c_id'];?>">
               <td><?php echo $sn;?></td>
               <td><?php echo $value['c_fname'].' '.$value['c_mname'].' '.$value['c_lname'];?></td>
               <td><?php echo $value['c_ctc_year'];?></td>
               <td><?php echo $value['c_code'];?></td>
               <td>
                 <input type="button" name="view" value="View" id="<?php echo $value["c_id"]; ?>" class="btn btn-default view_data" />
-                <!-- <a href="javascript:void(0)" onclick="counselorDetail('<?//=$value['c_id']; ?>')" class="btn btn-default">View</a>  -->
                 <a href="javascript:void(0)" onclick="counselorEdit('<?=$value['c_id']; ?>')" class="btn btn-primary">Edit</a>
-                <a href="javascript:void(0)" class="btn btn-danger delete_data">Delete</a>
+                <input type="button" name="delete" value="Delete" id="<?php echo $value["c_id"]; ?>" class="btn btn-danger delete_data"/>
               </td>
             </tr>
             <?php $sn++; } ?>
@@ -64,10 +64,9 @@
                   <table class="table table-striped">
                     <h2>Counselor Detail</h2>
                     <br>
-                 <!--    <tr>
-                      <td>Counselor ID :</td>
-                      <td id="c_id"></td>
-                    </tr> -->
+                    <tr>
+                      <td id="c_img"><!-- <img src="<?php// echo base_url();?>/uploads/userphoto/" width="100px" height="150px"> --></td>
+                    </tr>
                     <tr>
                       <td>Full Name :</td>
                       <td id="c_name"></td>
@@ -116,20 +115,6 @@
               </div><!-- end modal dialog -->
             </div><!-- end modal -->
           </div>
-
-          <div class="modal fade" role="dialog" id="dataModalDelete" >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-body" >
-                  Are you Sure?
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-flat yes" onclick="counselorDelete()" id="yes">Yes</button>
-                    <button type="button" class="btn btn-default btn-flat no" id="no">Cancel</button>
-                  </div>
-                </div><!-- end content -->
-              </div><!-- end modal dialog -->
-            </div><!-- end modal -->
-          </div>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -143,20 +128,28 @@
 
         $('.delete_data').click(function(){
           var counselor_id = $(this).attr("id");
-          $('#dataModalDelete').modal("show");
-        })
+          // var id = $(this).parents("tr").attr("id");
+          console.log(counselor_id);
 
-        $('#dataModalDelete').on('click','#yes', function(){
-          $('#dataModalDelete').modal('toggle');
-        });
-
-        $('#dataModalDelete').on('click','#no', function(){
-          $('#dataModalDelete').modal('toggle');
+          if (confirm('Are you sure?')) 
+          {
+            $.ajax({
+              url: 'Counselor/deleteCounselorById/'+counselor_id,
+              type: 'delete',
+              error: function(){
+                alert('Record cannot be deleted');
+              },
+              success: function(data){
+                $("#"+counselor_id).remove();
+                alert("Record deleted successfully");
+              }
+            });
+          }
         });
 
         $('.view_data').click(function(){  
           var counselor_id = $(this).attr("id");  
-          // alert(counselor_id);
+
           $.ajax({  
             url:'Counselor/getCounselorDetailById/'+counselor_id,  
             method:"post",  
@@ -164,7 +157,7 @@
             success:function(data){  
               var obj=JSON.parse(data);
 
-              // $('#c_id').html(obj.c_id);
+              $('#c_img').html(obj.c_photo);
               $('#c_name').html(obj.c_fname+" "+obj.c_mname+" "+obj.c_lname);
               $('#c_gender').html(obj.c_gender);
               $('#c_email').html(obj.c_email);

@@ -79,8 +79,11 @@ class Counselor extends MY_Controller {
 				);
 
 				$result = $this->Counselor_model->insertCounselor($InsertCounselor);
+				$row_id = $result;
 
-				if(!empty($result)){
+				$result1 = $this->uploadImage($row_id);
+
+				if(!empty($result1)){
 					$this->session->set_flashdata('success', "Data Inserted Successfully.");
 				}else{
 					$this->session->set_flashdata('error', "Sorry!! Data couldn't be inserted.");
@@ -90,6 +93,34 @@ class Counselor extends MY_Controller {
 			}
 		}
 		echo modules::run('Template/index',$data);
+	}
+
+	function uploadImage($row_id)
+	{
+		// print_r($_FILES['photo']);
+		// die();
+		$config = array(
+			'upload_path' => FCPATH. "uploads/userphoto/",
+			'allowed_types' => 'jpeg|jpg|png',
+			'overwrite' => TRUE,
+			'max_size' => 2048000,
+		);
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload()) {
+			$error = array('error'=>$this->upload->display_errors());
+			return $error;
+		}else{
+			$file_data = $this->upload->data();
+			$data=array('c_photo' => $this->input->post('photo'));
+			$data['img'] = base_url().'/uploads/userphoto'. $file_data['file_name'];
+			$this->db->update('tbl_counselor',$data,array('c_id' => $row_id)); 
+			echo $data['img'];
+			die();
+		}
+
+
 	}
 
 	function editCounselor($counselorId)
@@ -162,5 +193,11 @@ class Counselor extends MY_Controller {
 	{
 		$data['counselorDtl']=$this->Counselor_model->getCounselorDtlById($counselorId);		
 		echo json_encode($data['counselorDtl']);
+	}
+
+	function deleteCounselorById($counselorId)
+	{
+		$data['counselorDel'] = $this->Counselor_model->removeCounselorById($counselorId);
+		echo 'Record deleted successfully';
 	}
 }

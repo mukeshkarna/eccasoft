@@ -9,6 +9,15 @@
       <form class="form-horizontal" action="<?php echo base_url();?>Counselor/addNewCounselor" method="post">
         <div class="box-body">
           <div class="form-group">
+            <label for="photo" class="col-sm-2 control-label">User Photo</label>
+
+            <div class="col-sm-5">
+              <input type="file" name="photo" class="form-control" id="photo" size="">
+              File Size: Not more than 2MB <br> 
+              File Format: JPG, JPEG, PNG  
+            </div> 
+          </div>
+          <div class="form-group">
             <label for="firstname" class="col-sm-2 control-label">First Name</label>
 
             <div class="col-sm-10">
