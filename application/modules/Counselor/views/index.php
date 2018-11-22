@@ -65,7 +65,7 @@
                     <h2>Counselor Detail</h2>
                     <br>
                     <tr>
-                      <td id="c_img"><!-- <img src="<?php// echo base_url();?>/uploads/userphoto/" width="100px" height="150px"> --></td>
+                      <td id="c_img"><img src="<?php echo base_url();?>/uploads/userphoto/" width="100px" height="150px"></td>
                     </tr>
                     <tr>
                       <td>Full Name :</td>
@@ -141,7 +141,7 @@
               },
               success: function(data){
                 $("#"+counselor_id).remove();
-                // alert("Record deleted successfully");
+                alert("Record deleted successfully");
               }
             });
           }
