@@ -113,36 +113,6 @@ class Counselor extends MY_Controller {
 		echo modules::run('Template/index',$data);
 	}
 
-	// function uploadImage($file)
-	// {
-	// 	// $extension = explode('.', $file['name']);
-	// 	// $new_name = 'C.'.$extension[1];
-	// 	// $destination = '/upload/userphoto'. $new_name;
-	// 	// @move_uploaded_file($file['tmp_name'], $destination);
-
-	// 	// return $new_name;
-
-	// 	// $config['upload_path']          = './upload/userphoto/';
- //  //       $config['allowed_types']        = 'jpeg|jpg|png';
- //  //       $config['max_size']             = 2048000;
- //  //       $config['max_width']            = 400;
- //  //       $config['max_height']           = 400;
-
- //  //       $this->load->library('upload', $config);
-
- //  //       if (!$this->upload->do_upload('user_photo'))
- //  //       {
- //  //           $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
- //  //           $error = array('error' => $this->upload->display_errors());
- //  //           return $error;
- //  //       }
- //  //       else
- //  //       {
- //  //           $data = array('upload_data' => $this->upload->data());
- //  //           return $data;
- //  //       }
-	// }
-
 	function editCounselor($counselorId)
 	{
 		$data['title'] = 'Edit Counselor Detail';
