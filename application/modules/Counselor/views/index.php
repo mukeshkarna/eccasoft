@@ -37,7 +37,7 @@
       <div class="box-body table-responsive no-padding">
         <table class="table table-hover" id="counselor">
           <tr>
-            <th>ID</th>
+            <th>S.N.</th>
             <th>Name</th>
             <th>CTC Year</th>
             <th>CTC Code</th>
@@ -141,7 +141,7 @@
               },
               success: function(data){
                 $("#"+counselor_id).remove();
-                alert("Record deleted successfully");
+                // alert("Record deleted successfully");
               }
             });
           }

@@ -2,17 +2,26 @@
   <div class="box-header with-border">
     <h3 class="box-title">New Counselor Form</h3>
   </div>
+
+  <?php if ($this->session->flashdata('error')) { ?>
+  <div class="alert alert-warning fade in">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <?php echo $this->session->flashdata('error'); ?>
+  </div>
+<?php } ?>
   <!-- /.box-header -->
   <div class="box-body">
     <div class="row">
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url();?>Counselor/addNewCounselor" method="post">
+      <form class="form-horizontal" action="<?php echo base_url();?>Counselor/addNewCounselor" method="post" enctype="multipart/form-data">
         <div class="box-body">
           <div class="form-group">
             <label for="photo" class="col-sm-2 control-label">User Photo</label>
 
             <div class="col-sm-5">
-              <input type="file" name="photo" class="form-control" id="photo" size="">
+              <input type="file" name="user_photo" class="form-control" id="userphoto" size="2048000" accept="image/jpeg,image/png,image/jpg">
+              <?php echo form_error('user_photo'); ?>
+
               File Size: Not more than 2MB <br> 
               File Format: JPG, JPEG, PNG  
             </div> 

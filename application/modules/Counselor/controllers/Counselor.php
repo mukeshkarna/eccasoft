@@ -42,11 +42,11 @@ class Counselor extends MY_Controller {
 			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('gender','Gender', 'required');
-			$this->form_validation->set_rules('ctc_code','CTC Code', 'required');
+			$this->form_validation->set_rules('ctc_code','CTC Code', 'required|is_unique[tbl_counselor.c_code]');
 			$this->form_validation->set_rules('dob','Date of birth', 'required');
 			$this->form_validation->set_rules('paddress','Permanent Address', 'required|min_length[10]|max_length[200]');
 			$this->form_validation->set_rules('taddress','Temporary Address', 'required|min_length[10]|max_length[200]');
-			$this->form_validation->set_rules('email','Email', 'required');
+			$this->form_validation->set_rules('email','Email', 'required|valid_email');
 			$this->form_validation->set_rules('phone','Phone', 'required');
 			$this->form_validation->set_rules('ctc_year','CTC Year', 'required');
 			$this->form_validation->set_rules('ctc_month','CTC Month', 'required');
@@ -54,14 +54,22 @@ class Counselor extends MY_Controller {
 			$this->form_validation->set_rules('pass','Password', 'required');
 
 			if ($this->form_validation->run()==FALSE) {
-				$this->session->set_flashdata('error', "Form Validation Error!!!");
+				$this->session->set_flashdata('error', "Form Validation Error!!! Insert the data again.");
 			}
 			else
 			{
+				$img ='';
+				if ($_FILES['user_photo']['name'] !='') {
+					$img = $this->uploadImage($_FILES['user_photo']);
+				}else{
+					$img ='';
+				}
+
 				$InsertCounselor=array(
 					'c_fname' => $this->input->post('fname'),
 					'c_mname' => $this->input->post('mname'),
 					'c_lname' => $this->input->post('lname'),
+					'c_photo' => $this->input->post('ctc_code').'_'.$img,
 					'c_gender' => $this->input->post('gender'), 
 					'c_code' => $this->input->post('ctc_code'),
 					'c_dob' => $this->input->post('dob'),
@@ -79,11 +87,8 @@ class Counselor extends MY_Controller {
 				);
 
 				$result = $this->Counselor_model->insertCounselor($InsertCounselor);
-				$row_id = $result;
 
-				$result1 = $this->uploadImage($row_id);
-
-				if(!empty($result1)){
+				if(!empty($result)){
 					$this->session->set_flashdata('success', "Data Inserted Successfully.");
 				}else{
 					$this->session->set_flashdata('error', "Sorry!! Data couldn't be inserted.");
@@ -95,32 +100,14 @@ class Counselor extends MY_Controller {
 		echo modules::run('Template/index',$data);
 	}
 
-	function uploadImage($row_id)
+	function uploadImage($file)
 	{
-		// print_r($_FILES['photo']);
-		// die();
-		$config = array(
-			'upload_path' => FCPATH. "uploads/userphoto/",
-			'allowed_types' => 'jpeg|jpg|png',
-			'overwrite' => TRUE,
-			'max_size' => 2048000,
-		);
+		$extension = explode('.', $file['name']);
+		$new_name = 'C.'.$extension[1];
+		$destination = base_url().'/upload/userphoto/'. $new_name;
+		move_uploaded_file($file['tmp_name'], $destination);
 
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload()) {
-			$error = array('error'=>$this->upload->display_errors());
-			return $error;
-		}else{
-			$file_data = $this->upload->data();
-			$data=array('c_photo' => $this->input->post('photo'));
-			$data['img'] = base_url().'/uploads/userphoto'. $file_data['file_name'];
-			$this->db->update('tbl_counselor',$data,array('c_id' => $row_id)); 
-			echo $data['img'];
-			die();
-		}
-
-
+		return $new_name;
 	}
 
 	function editCounselor($counselorId)
@@ -156,6 +143,16 @@ class Counselor extends MY_Controller {
 			}
 			else
 			{
+				// $uploaded_image = $_POST['uploaded_image'];
+
+				// $img ='';
+				// if ($_FILES['image']['name'] !='') {
+				// 	$img = $this->upload_img($_FILES['image']);
+				// 	unlink('./assets/upload/'.$uploaded_image);
+				// }else{
+				// 	$img = $uploaded_image;
+				// }
+
 				$updateCounselor=array(
 					'c_fname' => $this->input->post('fname'),
 					'c_mname' => $this->input->post('mname'),
@@ -197,7 +194,14 @@ class Counselor extends MY_Controller {
 
 	function deleteCounselorById($counselorId)
 	{
-		$data['counselorDel'] = $this->Counselor_model->removeCounselorById($counselorId);
-		echo 'Record deleted successfully';
+		$deleteCounselor = $this->Counselor_model->removeCounselorById($counselorId);
+		
+		if(!empty($deleteCounselor))
+		{
+			$this->session->set_flashdata('success',"Data deleted successfully");
+		}else{
+			$this->session->set_flashdata('error', "Sorrry!! Data couldn't be deleted");
+		}
+		redirect('Counselor/index');
 	}
 }
