@@ -22,7 +22,7 @@ class Counselor extends MY_Controller {
 		$data['module']="Counselor";
 		$data['content_view']="index";
 		$data['status'] = 'active';
-		$data['counselorList']=$this->Counselor_model->getAllCounselors();
+		$data['counselorList'] = $this->Counselor_model->getAllCounselors();
 
 		echo modules::run('Template/index',$data);
 	}
