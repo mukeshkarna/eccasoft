@@ -24,15 +24,8 @@
         <h3 class="box-title">Counselors List</h3>
       </div>
       <div class="box-body">
-      <!--   <div class="input-group input-group-sm" style="width: 150px;">
-          <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-          <div class="input-group-btn">
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-          </div>
-        </div> -->
         <!-- /.box-header -->
-        <table class="table table-hover table-striped" id="counselor_tbl">
+        <table class="table table-hover table-striped table-bordered" id="counselor_tbl">
           <thead>
             <tr>
               <th>S.N.</th>
@@ -125,18 +118,13 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      // $('#counselor_tbl').DataTable();
       $('#counselor_tbl').DataTable({
         'paging'      : true,
-        'lengthChange': false,
+        'lengthChange': true,
         'searching'   : true,
         'ordering'    : true,
         'info'        : true,
         'autoWidth'   : false,
-        // "ajax": {
-        //     url : 'Counselor/index',
-        //     type : 'GET'
-        // },
       });
 
       $('.delete_data').click(function(){
