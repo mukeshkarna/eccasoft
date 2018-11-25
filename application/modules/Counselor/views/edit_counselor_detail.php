@@ -9,6 +9,18 @@
       <form class="form-horizontal" action="<?php echo base_url();?>Counselor/editCounselor/<?php echo $counselorDtl['c_id']; ?>" method="post">
         <div class="box-body">
           <div class="form-group">
+            <label for="photo" class="col-sm-2 control-label">User Photo</label>
+
+            <div class="col-sm-5">
+              <img src="<?php echo base_url();?>/upload/userphoto/<?php echo $counselorDtl['c_photo'];?>" style="width:100px; object-fit: cover; object-position: center;" >
+              <input type="file" name="user_photo" class="form-control" id="userphoto" size="2048000" accept="image/jpeg,image/png,image/jpg">
+              <?php echo form_error('user_photo'); ?>
+
+              File Size: Not more than 1MB <br> 
+              File Format: JPG, JPEG, PNG  
+            </div> 
+          </div>
+          <div class="form-group">
             <label for="firstname" class="col-sm-2 control-label">First Name</label>
 
             <div class="col-sm-10">

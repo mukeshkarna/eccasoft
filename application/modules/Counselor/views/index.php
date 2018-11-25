@@ -36,19 +36,29 @@
             </tr>
           </thead>
           <tbody>
-            <?php  $sn=1; foreach ($counselorList as $key => $value) { ?>
-              <tr id="<?php echo $value['c_id'];?>">
-                <td><?php echo $sn;?></td>
-                <td><?php echo $value['c_fname'].' '.$value['c_mname'].' '.$value['c_lname'];?></td>
-                <td><?php echo $value['c_ctc_year'];?></td>
-                <td><?php echo $value['c_code'];?></td>
-                <td>
-                  <input type="button" name="view" value="View" id="<?php echo $value["c_id"]; ?>" class="btn btn-default view_data" />
-                  <a href="javascript:void(0)" onclick="counselorEdit('<?=$value['c_id']; ?>')" class="btn btn-primary">Edit</a>
-                  <input type="button" name="delete" value="Delete" id="<?php echo $value["c_id"]; ?>" class="btn btn-danger delete_data"/>
-                </td>
-              </tr>
-              <?php $sn++; } ?>
+            <?php
+            if($counselorList==0)
+              { ?>
+                <td colspan="5" align="center"><?php echo "No Records found.";?></td>
+                <?php 
+              }else{ 
+                $sn=1; 
+                foreach ($counselorList as $key => $value) { ?>
+                  <tr id="<?php echo $value['c_id'];?>">
+                    <td><?php echo $sn;?></td>
+                    <td><?php echo $value['c_fname'].' '.$value['c_mname'].' '.$value['c_lname'];?></td>
+                    <td><?php echo $value['c_ctc_year'];?></td>
+                    <td><?php echo $value['c_code'];?></td>
+                    <td>
+                      <input type="button" name="view" value="View" id="<?php echo $value["c_id"]; ?>" class="btn btn-default view_data" />
+                      <a href="javascript:void(0)" onclick="counselorEdit('<?=$value['c_id']; ?>')" class="btn btn-primary">Edit</a>
+                      <input type="button" name="delete" value="Delete" id="<?php echo $value["c_id"]; ?>" class="btn btn-danger delete_data"/>
+                    </td>
+                  </tr>
+                  <?php 
+                  $sn++; 
+                } 
+              }?>
             </tbody>
           </table>
         </div>
@@ -124,7 +134,7 @@
         'searching'   : true,
         'ordering'    : true,
         'info'        : true,
-        'autoWidth'   : false,
+        'autoWidth'   : true,
       });
 
       $('.delete_data').click(function(){

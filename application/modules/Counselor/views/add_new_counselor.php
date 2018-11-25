@@ -19,10 +19,10 @@
             <label for="photo" class="col-sm-2 control-label">User Photo</label>
 
             <div class="col-sm-5">
-              <input type="file" name="user_photo" class="form-control" id="userphoto" size="2048000" accept="image/jpeg,image/png,image/jpg">
+              <input type="file" name="user_photo" class="form-control" id="userphoto" size="1024000" accept="image/jpeg,image/png,image/jpg">
               <?php echo form_error('user_photo'); ?>
 
-              File Size: Not more than 2MB <br> 
+              File Size: Not more than 1MB <br> 
               File Format: JPG, JPEG, PNG  
             </div> 
           </div>

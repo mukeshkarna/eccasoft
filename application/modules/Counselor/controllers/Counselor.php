@@ -64,7 +64,7 @@ class Counselor extends MY_Controller {
 				$config['file_name'] = $new_name;
 				$config['upload_path'] = './upload/userphoto/';
 		        $config['allowed_types'] = 'jpeg|jpg|png';
-		        $config['max_size'] = 2048000;
+		        $config['max_size'] = 1024000;
 
 		        $this->load->library('upload', $config);
 
