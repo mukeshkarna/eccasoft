@@ -1,6 +1,6 @@
 <!-- /.box-body -->
 <div class="box-footer clearfix">
-  <a href="javascript:void(0)" onclick="addPage()" class="btn btn-sm btn-info btn-flat pull-left">Add New Counselor</a>
+  <a href="javascript:void(0)" onclick="addPage()" class="btn btn-sm btn-info btn-flat pull-left"/>Add New Counselor</a>
 </div>
 <!-- /.box-footer -->
 <?php if ($this->session->flashdata('success')) { ?>
@@ -70,7 +70,7 @@
                   <h2>Counselor Detail</h2>
                   <br>
                   <tr>
-                    <td id="c_img"></td>
+                    <img id="c_img" style="border-radius:10%; width: 120px; object-fit: cover; object-position: center;" />
                   </tr>
                   <tr>
                     <td>Full Name :</td>
@@ -114,7 +114,7 @@
                   </tr>
                 </table>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default btn-flat" id="closeModal">Close</button>
+                  <button type="button" class="btn btn-default btn-flat" id="closeModal"/>Close</button>
                 </div>
               </div><!-- end content -->
             </div><!-- end modal dialog -->
@@ -168,7 +168,13 @@
           success:function(data){  
             var obj=JSON.parse(data);
 
-            $('#c_img').html(obj.c_photo);
+            if (obj.c_photo=="" && obj.c_gender=='male') {
+              $('#c_img').attr('src', '<?php echo base_url();?>assets/images/male.jpg');
+            } else if(obj.c_photo=="" && obj.c_gender=='female'){
+              $('#c_img').attr('src', '<?php echo base_url();?>assets/images/female.jpg'); 
+            }else{
+              $('#c_img').attr('src', '<?php echo base_url();?>upload/userphoto/'+obj.c_photo);
+            }
             $('#c_name').html(obj.c_fname+" "+obj.c_mname+" "+obj.c_lname);
             $('#c_gender').html(obj.c_gender);
             $('#c_email').html(obj.c_email);
