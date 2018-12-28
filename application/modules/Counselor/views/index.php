@@ -37,11 +37,9 @@
           </thead>
           <tbody>
             <?php
-            if($counselorList==0)
-              { ?>
+            if($counselorList==0){ ?>
                 <td colspan="5" align="center"><?php echo "No Records found.";?></td>
-                <?php 
-              }else{ 
+            <?php }else{ 
                 $sn=1; 
                 foreach ($counselorList as $key => $value) { ?>
                   <tr id="<?php echo $value['c_id'];?>">

@@ -17,7 +17,7 @@ class Staff_model extends CI_Model
 
 	function getAllStaffs()
 	{
-		$this->db->select('staff_id,staff_fname,staff_mname, staff_lname, staff_email, staff_designation');
+		$this->db->select('staff_id,staff_fname,staff_mname, staff_lname, staff_joined_date, staff_designation');
 		$this->db->from('tbl_staff');
 
 		$query = $this->db->get();
@@ -28,13 +28,17 @@ class Staff_model extends CI_Model
 		}
 	}
 
-	function getStaffDtlById()
+	function getStaffDtlById($staff_id)
 	{
-		$this->db->select('s.staff_id,s.staff_fname,s.staff_mname,s.staff_lname,s.staff_email,s.staff_designation, s.staff_phone,s.staff_p_address, s.staff_t_address, s.staff_joined_date, r.role_name');
-		$this->db->from('tnl_staff');
-  		$this->db->join('tbl_role', 'r.role_id = s.role_id');
-
-  		$query = $this->db->get()->row_array();
+		$sql = "select a.staff_id,a.staff_fname, a.staff_mname, a.staff_lname,a.staff_email, a.staff_designation, a.staff_phone,a.staff_p_address, a.staff_t_address, a.staff_joined_date, b.role_name from tbl_staff a left join tbl_role b on b.role_id=a.role_id where staff_id=$staff_id";
+		$result = $this->db->query($sql);
+		
+		if($result)
+		{
+			return $result->row_array();
+		}else{
+			return false;
+		}
 	}
 
 	function getRoleAll()

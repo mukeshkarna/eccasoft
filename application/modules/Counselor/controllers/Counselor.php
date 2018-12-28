@@ -7,7 +7,7 @@ class Counselor extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Counselor_model');
-        $this->load->helper(array('form', 'url'));
+		$this->load->helper(array('form', 'url'));
 
 		if(!$this->session->userdata('is_logged')){
 			redirect('Login');
@@ -39,7 +39,7 @@ class Counselor extends MY_Controller {
 		$this->load->library('form_validation');
 
 		if (isset($_POST['add_new_counselor'])) {
-						
+
 			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('gender','Gender', 'required');
@@ -59,30 +59,35 @@ class Counselor extends MY_Controller {
 			}
 			else
 			{
-				$extension = explode('.', $_FILES['user_photo']['name']);
-				$new_name = $this->input->post('ctc_code');
-				$config['file_name'] = $new_name;
-				$config['upload_path'] = './upload/userphoto/';
-		        $config['allowed_types'] = 'jpeg|jpg|png';
-		        $config['max_size'] = 1024000;
+				if (!$_FILES['user_photo']) {
+					$extension = explode('.', $_FILES['user_photo']['name']);
+					$new_name = $this->input->post('ctc_code');
+					$config['file_name'] = $new_name;
+					$config['upload_path'] = './upload/userphoto/';
+					$config['allowed_types'] = 'jpeg|jpg|png';
+					$config['max_size'] = 1024000;
 
-		        $this->load->library('upload', $config);
+					$this->load->library('upload', $config);
 
-		        if (!$this->upload->do_upload('user_photo'))
-		        {
-		            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
-		            $error = $this->upload->display_errors();
-		        }
-		        else
-		        {
-		            $img = $this->upload->data(); 
-		        }
+					if (!$this->upload->do_upload('user_photo'))
+					{
+						$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+						$error = $this->upload->display_errors();
+					}
+					else
+					{
+						$img = $this->upload->data(); 
+					}
+					$name = $new_name.'.'.$extension[1];
+				}else{
+					$name = "";
+				}
 
 				$InsertCounselor=array(
 					'c_fname' => $this->input->post('fname'),
 					'c_mname' => $this->input->post('mname'),
 					'c_lname' => $this->input->post('lname'),
-					'c_photo' => $new_name.'.'.$extension[1],
+					'c_photo' => $name,
 					'c_gender' => $this->input->post('gender'), 
 					'c_code' => $this->input->post('ctc_code'),
 					'c_dob' => $this->input->post('dob'),
@@ -94,7 +99,7 @@ class Counselor extends MY_Controller {
 					'c_ctc_month' => $this->input->post('ctc_month'),
 					'c_qualification' => $this->input->post('qualification'),
 					'c_password' => $this->input->post('pass'),
-					'c_role' => '3',
+					'c_role' => '2',
 					'c_created_at' => date('Y-m-s h:i:s'),
 					'c_created_by' => $this->session->userdata('user_id')
 				);
@@ -171,7 +176,7 @@ class Counselor extends MY_Controller {
 					'c_ctc_month' => $this->input->post('ctc_month'),
 					'c_qualification' => $this->input->post('qualification'),
 					'c_password' => $this->input->post('pass'),
-					'c_role' => '3',
+					'c_role' => '2',
 					'c_modified_at' => date('Y-m-s h:i:s'),
 					'c_modified_by' => $this->session->userdata('user_id')
 				);

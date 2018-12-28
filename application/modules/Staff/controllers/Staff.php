@@ -82,16 +82,19 @@ class Staff extends MY_Controller {
 	}
 
 
-	public function getStaffDtl()
+	public function getStaffDetailById($staff_id)
 	{
-		$data['title']='Staff';
-		$data['page_header']='Staff';
-		$data['heading']='Staff List';
-		$data['module']="Staff";
-		$data['content_view']="staffSetup";
-		$data['status'] = 'active';
-		$data['staffList'] = $this->Staff_model->getStaffDtlById();
+		$data['staffDtl'] = $this->Staff_model->getStaffDtlById($staff_id);
+		echo json_encode($data['staffDtl']);
+	}
 
-		echo modules::run('Template/index',$data);
+	public function editStaff($staff_id)
+	{
+		$data['title'] = 'Edit Staff Detail';
+		$data['page_header'] = 'Edit Staff Detail';
+		$data['heading'] = 'Edit Staff Detail';
+		$data['module'] = 'Staff';
+		$data['content_view'] = 'editStaffDetail';
+		$data['status'] = 'active';	
 	}
 }
