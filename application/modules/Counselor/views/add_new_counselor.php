@@ -22,8 +22,9 @@
               <input type="file" name="user_photo" class="form-control" id="userphoto" size="1024000" accept="image/jpeg,image/png,image/jpg">
               <?php echo form_error('user_photo'); ?>
 
-              File Size: Not more than 1MB <br> 
-              File Format: JPG, JPEG, PNG  
+              <p class="message">File Size: Not more than 1MB <br> 
+                 File Format: JPG, JPEG, PNG  
+              </p>
             </div> 
           </div>
           <div class="form-group">
@@ -31,7 +32,7 @@
 
             <div class="col-sm-10">
               <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name">
-              <?php echo form_error('fname'); ?>
+              <p class="error"><?php echo form_error('fname'); ?></p>
             </div>
           </div>
           <div class="form-group">
@@ -46,7 +47,7 @@
 
             <div class="col-sm-10">
               <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name">
-              <?php echo form_error('lname'); ?>
+              <p class="error"><?php echo form_error('lname'); ?></p>
             </div>
           </div>
           <div class="form-group">
@@ -58,7 +59,7 @@
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
-              <?php echo form_error('gender'); ?>
+              <p class="error"><?php echo form_error('gender'); ?></p>
             </div>
           </div>
           <div class="form-group">
@@ -66,7 +67,7 @@
 
             <div class="col-sm-10">
               <input type="text" name="ctc_code" class="form-control" id="ctccode" placeholder="CTC Code">
-              <?php echo form_error('ctc_code'); ?>
+              <p class="error"><?php echo form_error('ctc_code'); ?></p>
             </div>
           </div>
           <div class="form-group">
@@ -75,7 +76,7 @@
             <div class="col-sm-10">
               <div class="date">
                <input type="text" name="dob" class="form-control pull-right" id="datepicker" placeholder="Date of Birth">
-               <?php echo form_error('dob'); ?>
+               <p class="error"><?php echo form_error('dob'); ?></p>
              </div>
            </div>
          </div>
@@ -84,14 +85,14 @@
 
           <div class="col-sm-10">
             <textarea class="form-control" name="paddress" rows="3" placeholder="Enter Permanent Address"></textarea>
-            <?php echo form_error('paddress'); ?>
+            <p class="error"><?php echo form_error('paddress'); ?></p>
           </div>
         </div>
         <div class="form-group">
           <label for="taddress" class="col-sm-2 control-label">Temporary Address</label>
           <div class="col-sm-10">
             <textarea class="form-control" name="taddress" rows="3" placeholder="Enter Temporary Address"></textarea>
-            <?php echo form_error('taddress'); ?>
+            <p class="error"><?php echo form_error('taddress'); ?></p>
           </div>
         </div>
         <div class="form-group">
@@ -99,7 +100,7 @@
 
           <div class="col-sm-10">
             <input type="email" name="email" class="form-control" id="email" placeholder="Email">
-            <?php echo form_error('email'); ?>
+            <p class="error"><?php echo form_error('email'); ?></p>
           </div>
         </div>
         <div class="form-group">
@@ -120,7 +121,7 @@
             }
             ?>
           </select>
-          <?php echo form_error('ctc_year'); ?>
+          <p class="error"><?php echo form_error('ctc_year'); ?></p>
         </div>
       </div>
       <div class="form-group">
@@ -142,7 +143,7 @@
               <option value="nov">November</option>;
               <option value="dec">December</option>;
           </select>
-          <?php echo form_error('ctc_month'); ?>
+          <p class="error"><?php echo form_error('ctc_month'); ?></p>
         </div>
       </div>
       <div class="form-group">
@@ -155,7 +156,7 @@
             <option value="bachelor">Bachelor</option>
             <option value="10+2">10+2</option>
           </select>
-          <?php echo form_error('qualification'); ?>
+          <p class="error"><?php echo form_error('qualification'); ?></p>
         </div>
       </div>
       <div class="form-group">
@@ -163,7 +164,7 @@
 
         <div class="col-sm-10">
           <input type="password" name="pass" class="form-control" id="password" placeholder="Password">
-          <?php echo form_error('pass'); ?>
+          <p class="error"><?php echo form_error('pass'); ?></p>
         </div>
       </div>
     </div>
@@ -189,3 +190,12 @@
     window.location.assign('<?php echo base_url(); ?>/Counselor')
   }) ;
 </script>
+<style>
+p.error{
+  color:red;
+}
+p.message{
+  color:blue;
+  font-weight:bold;
+}
+</style>

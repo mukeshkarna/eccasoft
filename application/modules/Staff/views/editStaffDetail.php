@@ -8,6 +8,17 @@
       <!-- form start -->
       <form class="form-horizontal" action="<?php echo base_url();?>Staff/addNewStaff" method="post">
         <div class="box-body">
+        <div class="form-group">
+            <label for="photo" class="col-sm-2 control-label">Staff Photo</label>
+
+            <div class="col-sm-5">
+              <input type="file" name="staff_photo" class="form-control" id="staffphoto" size="1024000" accept="image/jpeg,image/png,image/jpg">
+              <p style="font-color:red;"><?php echo form_error('staff_photo'); ?></p>
+
+              File Size: Not more than 1MB <br> 
+              File Format: JPG, JPEG, PNG  
+            </div> 
+          </div>
           <div class="form-group">
             <label for="fname" class="col-sm-2 control-label">First Name</label>
 
@@ -27,6 +38,18 @@
 
             <div class="col-sm-10">
               <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name" value="<?php echo $staffDtl['staff_lname']; ?>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="gender" class="col-sm-2 control-label">Gender</label>
+
+            <div class="col-sm-10">
+              <select class="form-control gender" name="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <?php echo form_error('gender'); ?>
             </div>
           </div>
           <div class="form-group">
@@ -108,6 +131,7 @@
 <script>
   $(document).ready( function () {
     $('.role').val('<?=$staffDtl['role_id']; ?>');
+    $('.gender').val('<?=$staffDtl['staff_gender']; ?>');
 
     $('#datepicker').datepicker({
       format: 'yyyy-mm-dd',

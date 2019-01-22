@@ -43,6 +43,7 @@ class Staff extends MY_Controller {
 			$this->form_validation->set_rules('fname','First Name','required');
 			$this->form_validation->set_rules('lname','Last Name','required');
 			$this->form_validation->set_rules('pass','Password','required');
+			$this->form_validation->set_rules('gender', 'Gender', 'required');
 			$this->form_validation->set_rules('email','Email','required');
 			$this->form_validation->set_rules('phoneno', 'Phone No.' ,'required');
 			$this->form_validation->set_rules('joineddate', 'Joined Date' ,'required');
@@ -127,6 +128,7 @@ class Staff extends MY_Controller {
 			$this->form_validation->set_rules('fname','First Name','required');
 			$this->form_validation->set_rules('lname','Last Name','required');
 			$this->form_validation->set_rules('pass','Password','required');
+			$this->form_validation->set_rules('gender', 'Gender', 'required');
 			$this->form_validation->set_rules('email','Email','required');
 			$this->form_validation->set_rules('phoneno', 'Phone No.' ,'required');
 			$this->form_validation->set_rules('joineddate', 'Joined Date' ,'required');
@@ -134,6 +136,8 @@ class Staff extends MY_Controller {
 			$this->form_validation->set_rules('taddress', 'Temporary Address' ,'required');
 			$this->form_validation->set_rules('role', 'Role' ,'required');
 			$this->form_validation->set_rules('designation', 'Designation', 'required');
+
+			
 		}
 
 		echo modules::run('Template/index', $data);	
