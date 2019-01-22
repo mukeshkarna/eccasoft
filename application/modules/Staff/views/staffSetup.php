@@ -49,8 +49,15 @@
                   <h2>Staff Detail</h2>
                   <br>
                   <tr>
+                    <img id="s_img" style="border-radius:10%; width: 120px; object-fit: cover; object-position: center;" />
+                  </tr>
+                  <tr>
                     <td>Full Name :</td>
                     <td id="s_name"></td>
+                  </tr>
+                  <tr>
+                    <td>Gender :</td>
+                    <td id="s_gender" style="text-transform: capitalize;"></td>
                   </tr>
                   <tr>
                     <td>Email :</td>
@@ -114,7 +121,16 @@
           data:{},
           success:function(data){
             var obj=JSON.parse(data);
+
+            if ((obj.staff_photo=="" || obj.staff_photo==null) && obj.staff_gender=='male') {
+              $('#s_img').attr('src', '<?php echo base_url();?>assets/images/male.jpg');
+            } else if((obj.staff_photo=="" || obj.staff_photo==null) && obj.staff_gender=='female'){
+              $('#s_img').attr('src', '<?php echo base_url();?>assets/images/female.jpg'); 
+            }else{
+              $('#s_img').attr('src', '<?php echo base_url();?>upload/staffphoto/'+obj.staff_photo);
+            }
             $('#s_name').html(obj.staff_fname+" "+obj.staff_mname+" "+obj.staff_lname);
+            $('#s_gender').html(obj.staff_gender);
             $('#s_email').html(obj.staff_email);
             $('#s_desig').html(obj.staff_designation);
             $('#s_phone').html(obj.staff_phone);

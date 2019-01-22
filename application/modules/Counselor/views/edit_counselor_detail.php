@@ -182,8 +182,7 @@
     $('#datepicker').datepicker({
         format: 'yyyy-mm-dd',
     });
-
-  } );
+  });
   $('.cancel').click(function(){
     window.location.assign('<?php echo base_url(); ?>/Counselor')
   }); 

@@ -53,28 +53,52 @@ class Staff extends MY_Controller {
 			
 			if($this->form_validation->run()==FALSE)
 			{
-				echo "something wrong happened";
+				$this->session->set_flashdata('error', "Form Validation Error!!! Insert the data again.");
 			}else{
+				if(!$_FILES['staff_photo']) {
+					$extension = explode('.', $_FILES['staff_photo']['name']);
+					$new_name = $this->input->post('staff_id');
+					$config['file_name'] = $new_name;
+					$config['upload_path'] = './upload/staffphoto/';
+					$config['allowed_types'] = 'jpeg|jpg|png';
+					$config['max_size'] = 1024000;
+
+					$this->load->library('upload', $config);
+
+					if(!$this->upload->do_upload('staff_photo')){
+						$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+						$error = $this->upload->display_errors();
+					} else {
+						$img = $this->upload->data(); 
+					}
+					$name = $new_name.'.'.$extension[1];
+				} else {
+					$name = "";
+				}
 				$InsertStaff=array(
-					'staff_fname' => $_POST['fname'],
-					'staff_mname' => $_POST['mname'],
-					'staff_lname' => $_POST['lname'], 
-					'staff_password' => $_POST['pass'],
-					'staff_email' => $_POST['email'],
-					'staff_phone' => $_POST['phoneno'],
-					'staff_designation' => $_POST['designation'],
-					'staff_joined_date' => $_POST['joineddate'],
-					'staff_p_address' => $_POST['paddress'],
-					'staff_t_address' => $_POST['taddress'],
-					'role_id' => $_POST['role'],
+					'staff_fname' => $this->input->post('fname'),
+					'staff_mname' => $this->input->post('mname'),
+					'staff_lname' => $this->input->post('lname'),
+					'staff_gender' => $this->input->post('gender'),
+					'staff_photo' => $name, 
+					'staff_password' => $this->input->post('pass'),
+					'staff_email' => $this->input->post('email'),
+					'staff_phone' => $this->input->post('phoneno'),
+					'staff_designation' => $this->input->post('designation'),
+					'staff_joined_date' => $this->input->post('joineddate'),
+					'staff_p_address' => $this->input->post('paddress'),
+					'staff_t_address' => $this->input->post('taddress'),
+					'role_id' => $this->input->post('role'),
 					'staff_created_at' => date('Y-m-s h:i:s'),
 					'staff_created_by' => $this->session->userdata('user_id')
 				);
-				// echo '<pre>';
-				// print_r($InsertStaff);
-				// echo '</pre>';
-				// die();
-				$this->Staff_model->addNewStaff($InsertStaff);
+
+				$result = $this->Staff_model->addNewStaff($InsertStaff);
+				if(!empty($result)){
+					$this->session->set_flashdata('success', "Data Inserted Successfully.");
+				}else{
+					$this->session->set_flashdata('error', "Data couldn't be inserted.");
+				}
 				redirect('Staff/index');
 			}
 		}
@@ -96,5 +120,22 @@ class Staff extends MY_Controller {
 		$data['module'] = 'Staff';
 		$data['content_view'] = 'editStaffDetail';
 		$data['status'] = 'active';	
+		$data['staffDtl'] = $this->Staff_model->getStaffDtlById($staff_id);
+		$data['roleList'] = $this->Staff_model->getRoleAll();
+
+		if(isset($_POST['edit_staff'])) {
+			$this->form_validation->set_rules('fname','First Name','required');
+			$this->form_validation->set_rules('lname','Last Name','required');
+			$this->form_validation->set_rules('pass','Password','required');
+			$this->form_validation->set_rules('email','Email','required');
+			$this->form_validation->set_rules('phoneno', 'Phone No.' ,'required');
+			$this->form_validation->set_rules('joineddate', 'Joined Date' ,'required');
+			$this->form_validation->set_rules('paddress', 'Permanent Address' ,'required');
+			$this->form_validation->set_rules('taddress', 'Temporary Address' ,'required');
+			$this->form_validation->set_rules('role', 'Role' ,'required');
+			$this->form_validation->set_rules('designation', 'Designation', 'required');
+		}
+
+		echo modules::run('Template/index', $data);	
 	}
 }
