@@ -58,5 +58,11 @@ class Staff_model extends CI_Model
 			return false;
 		}
 	}
+
+	function updateStaffById($staff_id, $updateStaff)
+	{
+		$ret =  $this->db->update('tbl_staff', $updateStaff, array('staff_id' => $staff_id));
+		return $ret;
+	}
 }
 ?>

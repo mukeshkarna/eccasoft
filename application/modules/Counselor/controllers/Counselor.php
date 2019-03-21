@@ -132,7 +132,7 @@ class Counselor extends MY_Controller {
 		if (isset($_POST['edit_counselor'])) {
 			
 			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
-			$this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
+			// $this->form_validation->set_rules('fname','Full Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('lname','Last Name', 'required|min_length[3]|max_length[30]');
 			$this->form_validation->set_rules('gender','Gender', 'required');
 			$this->form_validation->set_rules('ctc_code','CTC Code', 'required');

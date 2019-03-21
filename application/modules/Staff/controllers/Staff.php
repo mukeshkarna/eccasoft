@@ -52,10 +52,10 @@ class Staff extends MY_Controller {
 			$this->form_validation->set_rules('role', 'Role' ,'required');
 			$this->form_validation->set_rules('designation', 'Designation', 'required');
 			
-			if($this->form_validation->run()==FALSE)
-			{
+			if($this->form_validation->run()==FALSE){
 				$this->session->set_flashdata('error', "Form Validation Error!!! Insert the data again.");
-			}else{
+			}
+			else{
 				if(!$_FILES['staff_photo']) {
 					$extension = explode('.', $_FILES['staff_photo']['name']);
 					$new_name = $this->input->post('staff_id');
@@ -136,10 +136,37 @@ class Staff extends MY_Controller {
 			$this->form_validation->set_rules('taddress', 'Temporary Address' ,'required');
 			$this->form_validation->set_rules('role', 'Role' ,'required');
 			$this->form_validation->set_rules('designation', 'Designation', 'required');
-
 			
-		}
+			if ($this->form_validation->run()==FALSE) {
+				$this->session->set_flashdata('error', "Form Validation Error");
+			} else {
+				$updateStaff=array(
+					'staff_fname' => $this->input->post('fname'),
+					'staff_mname' => $this->input->post('mname'),
+					'staff_lname' => $this->input->post('lname'),
+					'staff_gender' => $this->input->post('gender'),
+					// 'staff_photo' => $name, 
+					'staff_password' => $this->input->post('pass'),
+					'staff_email' => $this->input->post('email'),
+					'staff_phone' => $this->input->post('phoneno'),
+					'staff_designation' => $this->input->post('designation'),
+					'staff_joined_date' => $this->input->post('joineddate'),
+					'staff_p_address' => $this->input->post('paddress'),
+					'staff_t_address' => $this->input->post('taddress'),
+					'role_id' => $this->input->post('role'),
+					'staff_updated_at' => date('Y-m-s h:i:s'),
+					'staff_updated_by' => $this->session->userdata('user_id')
+				);
 
-		echo modules::run('Template/index', $data);	
+				$result = $this->Staff_model->updateStaffById($staff_id,$updateStaff);
+				if(!empty($result)){
+					$this->session->set_flashdata('success', "Data Updated Successfully.");
+				}else{
+					$this->session->set_flashdata('error', "Sorry!! Data couldn't be updated.");
+				}
+				redirect('Staff/index');
+			}
+		}
+		echo modules::run('Template/index', $data);
 	}
 }

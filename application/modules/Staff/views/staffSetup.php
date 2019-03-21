@@ -112,6 +112,23 @@
         'autoWidth'   : true,
       });
 
+      $('.delete_data').click(function(){
+        var staff_id = $(this).attr("id");
+        if (confirm('Are you sure?')) {
+          $.ajax({
+            url: 'Staff/deleteStaffById/'+staff_id,
+            type: 'delete',
+            error: function(){
+              alert('Record cannot be deleted');
+            },
+            success: function(data){
+              $("#"+staff_id).remove();
+              alert("Record deleted successfully");
+            }
+          });
+        }
+      });
+
       $('.view_data').click(function(){
         var staff_id = $(this).attr("id");
 
