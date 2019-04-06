@@ -114,6 +114,8 @@
 
       $('.delete_data').click(function(){
         var staff_id = $(this).attr("id");
+        console.log(staff_id);
+        
         if (confirm('Are you sure?')) {
           $.ajax({
             url: 'Staff/deleteStaffById/'+staff_id,

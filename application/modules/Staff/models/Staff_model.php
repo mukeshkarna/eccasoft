@@ -64,5 +64,10 @@ class Staff_model extends CI_Model
 		$ret =  $this->db->update('tbl_staff', $updateStaff, array('staff_id' => $staff_id));
 		return $ret;
 	}
+
+	function removeStaffById($staff_id){
+		$ret =  $this->db->delete('tbl_staff', array('staff_id' => $staff_id));
+		return $ret;	
+	}
 }
 ?>

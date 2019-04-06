@@ -121,6 +121,7 @@ class Staff extends MY_Controller {
 		$data['module'] = 'Staff';
 		$data['content_view'] = 'editStaffDetail';
 		$data['status'] = 'active';	
+		
 		$data['staffDtl'] = $this->Staff_model->getStaffDtlById($staff_id);
 		$data['roleList'] = $this->Staff_model->getRoleAll();
 
@@ -159,9 +160,10 @@ class Staff extends MY_Controller {
 				);
 
 				$result = $this->Staff_model->updateStaffById($staff_id,$updateStaff);
+
 				if(!empty($result)){
 					$this->session->set_flashdata('success', "Data Updated Successfully.");
-				}else{
+				} else {
 					$this->session->set_flashdata('error', "Sorry!! Data couldn't be updated.");
 				}
 				redirect('Staff/index');
@@ -169,4 +171,18 @@ class Staff extends MY_Controller {
 		}
 		echo modules::run('Template/index', $data);
 	}
+
+	function deleteStaffById($staffId)
+	{
+		$deleteStaff = $this->Staff_model->removeStaffById($staffId);
+		
+		if(!empty($deleteStaff))
+		{
+			$this->session->set_flashdata('success',"Data deleted successfully");
+		}else{
+			$this->session->set_flashdata('error', "Sorrry!! Data couldn't be deleted");
+		}
+		redirect('Staff/index');
+	}
 }
+?>

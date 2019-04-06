@@ -133,6 +133,23 @@
         'ordering'    : true,
         'info'        : true,
         'autoWidth'   : true,
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }
+        ]
+        // 'buttons'     : [
+        //         {
+        //           extend: 'pdf', className: 'btn green btn-outline',  text: 'Export PDF',
+        //           customize: function (doc) {
+        //             doc.defaultStyle = 
+        //             {
+        //                 font: 'alef'
+        //             }
+        //           }
+        //         }],
       });
 
       $('.delete_data').click(function(){

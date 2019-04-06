@@ -148,9 +148,7 @@ class Counselor extends MY_Controller {
 
 			if ($this->form_validation->run()==FALSE) {
 				$this->session->set_flashdata('error', "Form Validation Error!!!");
-			}
-			else
-			{
+			} else {
 				// $uploaded_image = $_POST['uploaded_image'];
 
 				// $img ='';
